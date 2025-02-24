@@ -1,11 +1,29 @@
+CREATE TABLE countries(
+    id SERIAL PRIMARY KEY,
+    country TEXT
+);
+
+
+-- ТАБЛИЦА cities
+CREATE TABLE cities(
+    id SERIAL PRIMARY KEY,
+    city TEXT,
+    country_id int,
+    FOREIGN KEY (country_id) references countries(id)
+);
+
+
 -- Таблица users
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    city_id int not null,
+    FOREIGN KEY (city_id) references cities(id)
 );
+
 
 -- Таблица sessions
 CREATE TABLE sessions (
@@ -22,6 +40,7 @@ CREATE TABLE settings (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     distance_unit TEXT NOT NULL,
+    city TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
